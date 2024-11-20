@@ -4,8 +4,6 @@ A powerful Raycast extension for managing Railway projects with ease. View proje
 
 ![Extension Screenshot](./extension.png)
 
----
-
 ## ✨ Features
 
 - **Project Management**  
@@ -20,13 +18,10 @@ A powerful Raycast extension for managing Railway projects with ease. View proje
   - View deployments for each service.  
   - Access detailed build and deployment logs.
 
----
-
 ## 🚀 Commands
 
 - **List Projects**: Quickly view and search all your Railway projects.
 
----
 
 ## ⚙️ Setup Instructions
 
@@ -52,8 +47,6 @@ Follow these steps to get started with the Railway Raycast Extension:
    - When prompted, enter your Railway API token.
 
 5. **You're Ready to Go!** 🎉
-
----
 
 ## 🔗 Useful Links
 
