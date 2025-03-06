@@ -11,8 +11,8 @@
   "license": "MIT",
   "commands": [
     {
-      "name": "list-projects",
-      "title": "List Projects",
+      "name": "projects",
+      "title": "Projects",
       "description": "Show a list of your Railway projects",
       "mode": "view"
     }
