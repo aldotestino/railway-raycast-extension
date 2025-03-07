@@ -1,5 +1,5 @@
-import { Log } from "../types";
-import { formatLogs, gqlFetch } from "../utils";
+import { Log, ServiceLogs } from "../types";
+import { gqlFetch } from "../utils";
 
 const deployQuery = (deploymentId: string) => `
 query {
@@ -37,7 +37,7 @@ type BuildLogsResponse = {
   }>
 };
 
-export async function getLogs(deploymentId: string, type: 'deploy' | 'build'): Promise<string> {
+export async function getLogs(deploymentId: string, type: 'deploy' | 'build'): Promise<ServiceLogs> {
   let logs: Array<Log>
 
   if (type === 'build') {
@@ -47,5 +47,8 @@ export async function getLogs(deploymentId: string, type: 'deploy' | 'build'): P
   const { deploymentLogs } = await gqlFetch<DeploymentLogsResponse>(deployQuery(deploymentId));
   logs = deploymentLogs;
 
-  return formatLogs(logs, type);
+  return {
+    type,
+    logs: logs.toReversed()
+  }
 }

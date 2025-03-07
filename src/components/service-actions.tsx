@@ -1,47 +1,44 @@
 import { Action, ActionPanel } from "@raycast/api";
 import { repoPage, servicePage } from "../lib/utils";
-import ServiceDeployments from "../screens/list-service-deployments";
+import ServiceDeployments from "../screens/service-deployments-list";
+import { Service } from "../lib/types";
 
 function ServiceActions({
-  serviceId,
+  service,
   projectId,
-  domain,
-  repo,
 }: {
-  serviceId: string;
-  projectId: string;
-  domain?: string;
-  repo?: string;
+  service: Service,
+  projectId: string,
 }) {
 
   return (
     <ActionPanel>
       <ActionPanel.Section title="Open in Raycast">
-        <Action.Push title="Show Deployments" target={<ServiceDeployments projectId={projectId} serviceId={serviceId} />} />
+        <Action.Push title="Show Deployments" target={<ServiceDeployments projectId={projectId} serviceId={service.id} />} />
       </ActionPanel.Section>
 
       <ActionPanel.Section title="Open in Browser">
-        <Action.OpenInBrowser title="Open Service" url={servicePage(projectId, serviceId)} shortcut={{ modifiers: ["opt"], key: "s" }} />
-        {domain && <Action.OpenInBrowser title="Open Domain" url={domain} shortcut={{ modifiers: ["opt"], key: "w" }} />}
-        {repo && (
-          <Action.OpenInBrowser title="Open GitHub" url={repoPage(repo)} shortcut={{ modifiers: ["opt"], key: "g" }} />
+        <Action.OpenInBrowser title="Open Service" url={servicePage(projectId, service.id)} shortcut={{ modifiers: ["opt"], key: "s" }} />
+        {service.domain && <Action.OpenInBrowser title="Open Domain" url={service.domain} shortcut={{ modifiers: ["opt"], key: "w" }} />}
+        {service.repo && (
+          <Action.OpenInBrowser title="Open GitHub" url={repoPage(service.repo)} shortcut={{ modifiers: ["opt"], key: "g" }} />
         )}
       </ActionPanel.Section>
 
       <ActionPanel.Section>
         <Action.CopyToClipboard
           title="Copy Service URL"
-          content={servicePage(projectId, serviceId)}
+          content={servicePage(projectId, service.id)}
           shortcut={{ modifiers: ["opt"], key: "c" }}
         />
-        {domain && (
+        {service.domain && (
           <Action.CopyToClipboard
             title="Copy Domain"
-            content={domain}
+            content={service.domain}
             shortcut={{ modifiers: ["opt", "shift"], key: "c" }}
           />
         )}
-        {repo && <Action.CopyToClipboard title="Copy Repository URL" content={repoPage(repo)} />}
+        {service.repo && <Action.CopyToClipboard title="Copy Repository URL" content={repoPage(service.repo)} />}
       </ActionPanel.Section>
     </ActionPanel>
   );

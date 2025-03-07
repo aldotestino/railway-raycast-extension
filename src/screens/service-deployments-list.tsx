@@ -2,7 +2,7 @@ import { List } from '@raycast/api'
 import { useCachedPromise } from '@raycast/utils';
 import { getServiceDeployments } from '../lib/api/service-deployments';
 import DeploymentActions from '../components/deployment-actions';
-import { DEPLOYMENT_STATUS_COLOR, DEPLOYMENT_STATUS_ICON } from '../lib/data';
+import { getDeploymentStatusIcon } from '../lib/utils';
 
 function ServiceDeployments({ projectId, serviceId }: { projectId: string, serviceId: string }) {
 
@@ -18,8 +18,8 @@ function ServiceDeployments({ projectId, serviceId }: { projectId: string, servi
         <List.Item
           key={deployment.id}
           title={deployment.id}
-          icon={{source: DEPLOYMENT_STATUS_ICON[deployment.status], tintColor: DEPLOYMENT_STATUS_COLOR[deployment.status]}}
-          accessories={[{date: new Date(deployment.createdAt)}]}
+          icon={getDeploymentStatusIcon(deployment.status)}
+          accessories={[{date: new Date(deployment.createdAt), tooltip: new Date(deployment.createdAt).toLocaleString()}]}
           actions={<DeploymentActions projectId={projectId} serviceId={serviceId} deploymentId={deployment.id} />}
         />
       ))}

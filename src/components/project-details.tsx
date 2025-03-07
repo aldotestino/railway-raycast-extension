@@ -1,13 +1,13 @@
 import { List, Image, Icon } from "@raycast/api";
 import { Project } from "../lib/types";
-import { getColorByEnvName, getIconByEnvName } from "../lib/utils";
+import { getEnvironmentTag } from "../lib/utils";
 
 function ProjectDetails({ project }: { project: Project }) {
   return (
     <List.Item.Detail
       metadata={
         <List.Item.Detail.Metadata>
-          <List.Item.Detail.Metadata.Label title="Detais" />
+          <List.Item.Detail.Metadata.Label title="Details" />
           {project.description && <List.Item.Detail.Metadata.Label title="Description" text={project.description} />}
           <List.Item.Detail.Metadata.Label
             title="Admin"
@@ -22,10 +22,9 @@ function ProjectDetails({ project }: { project: Project }) {
           <List.Item.Detail.Metadata.TagList title="Environments">
             {project.environments.map((env) => (
               <List.Item.Detail.Metadata.TagList.Item
-                key={env.id}
-                text={env.name}
-                color={getColorByEnvName(env.name)}
-                icon={getIconByEnvName(env.name)}
+                key={env}
+                text={env}
+                {...getEnvironmentTag(env)}
               />
             ))}
           </List.Item.Detail.Metadata.TagList>

@@ -32,28 +32,24 @@ export type Project = {
   name: string;
   description: string;
   members: Array<Member>;
-  environments: Array<Pick<Environment, "name" | "id">>;
+  environments: Array<string>;
   admin: Member;
   cost: number;
   estimatedCost: number;
 };
 
 export type Service = {
+  environment: string;
   id: string;
   name: string;
   domain?: string;
   repo?: string;
 };
 
-export type Environment = {
-  id: string;
-  name: string;
+export type ProjectDetails = {
   services: Array<Service>;
-};
-
-export type ProjectServices = {
-  environments: Array<Environment>;
-};
+  environments: Array<string>;
+}
 
 export type DeploymentStatus = 'BUILDING' | 'CRASHED' | 'DEPLOYING' | 'FAILED' | 'INITIALIZING' | 'NEEDS_APPROVAL' | 'QUEUED' | 'REMOVED' | 'REMOVING' | 'SKIPPED' | 'SLEEPING' | 'SUCCESS' | 'WAITING';
 
@@ -68,6 +64,11 @@ export type Log = {
   message: string;
   severity: string;
 };
+
+export type ServiceLogs = {
+  type: "deploy" | "build";
+  logs: Array<Log>;
+}
 
 export type RawUsage = Array<{
   measurement: string

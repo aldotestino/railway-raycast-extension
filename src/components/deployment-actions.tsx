@@ -1,6 +1,6 @@
 import { Action, ActionPanel } from "@raycast/api";
 import { deploymentPage } from "../lib/utils";
-import DetailLogs from "../screens/detail-logs";
+import DetailLogs from "../screens/logs-list";
 
 function DeploymentActions({ projectId, serviceId, deploymentId }: { projectId: string; serviceId: string; deploymentId: string }) {
   return (

@@ -1,11 +1,11 @@
-import { getPreferenceValues } from "@raycast/api";
 import fetch from "node-fetch";
-import { ENV_COLORS, ENV_ICONS, ENV_REGEX, GITHUB_URL, PRICES, RAILWAY_API_URL, RAILWAY_URL } from "./data";
-import { ExtensionSettings, GQLData, GQLErrors, Log, Measuements, RawUsage } from "./types";
-
-const { railwayApiKey } = getPreferenceValues<ExtensionSettings>();
+import { getPreferenceValues } from "@raycast/api";
+import { DEPLOYMENT_STATUS_ICON_PROPS, ENV_REGEX, ENV_TAG_PROPS, GITHUB_URL, LOG_SEVERITY_TAG_PROPS, PRICES, RAILWAY_API_URL, RAILWAY_URL, SEVERITY_REGEX } from "./data";
+import { DeploymentStatus, ExtensionSettings, GQLData, GQLErrors, Measuements, RawUsage } from "./types";
 
 export async function gqlFetch<T>(query: string): Promise<T> {
+  const { railwayApiKey } = getPreferenceValues<ExtensionSettings>();
+
   const res = await fetch(RAILWAY_API_URL, {
     method: "POST",
     headers: {
@@ -21,20 +21,8 @@ export async function gqlFetch<T>(query: string): Promise<T> {
   return json.data;
 }
 
-function envMatch(envName: string): keyof typeof ENV_REGEX {
-  return (
-    (Object.keys(ENV_REGEX).find((key) =>
-      envName.match(ENV_REGEX[key as keyof typeof ENV_REGEX]),
-    ) as keyof typeof ENV_REGEX) || "prod"
-  );
-}
-
-export function getColorByEnvName(envName: string) {
-  return ENV_COLORS[envMatch(envName)];
-}
-
-export function getIconByEnvName(envName: string) {
-  return ENV_ICONS[envMatch(envName)];
+function findMatchIn<T extends Record<string, RegExp>>(stringToMatch: string, matches: T): keyof T {
+  return Object.keys(matches).find((key) => stringToMatch.match(matches[key as keyof T])) as keyof T;
 }
 
 export function projectPage(id: string, page?: "observability" | "logs" | "settings") {
@@ -53,31 +41,16 @@ export function repoPage(repo: string) {
   return `${GITHUB_URL}/${repo}`;
 }
 
-export function formatLogs(logs: Array<Log>, type: 'deploy' | 'build'): string {
-  const formattedLogs: { [key: string]: string[] } = {};
+export function getSeverityTag(severity: string) {
+  return LOG_SEVERITY_TAG_PROPS[findMatchIn(severity, SEVERITY_REGEX)];
+}
 
-  logs.forEach((log) => {
-    const logDate = new Date(log.timestamp);
-    const date = logDate.toLocaleDateString('it-IT'); // Get local date
-    const time = logDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }); // Get local time
+export function getEnvironmentTag(environment: string) {
+  return ENV_TAG_PROPS[findMatchIn(environment, ENV_REGEX)];
+}
 
-    if (!formattedLogs[date]) {
-      formattedLogs[date] = [];
-    }
-
-    formattedLogs[date].push(
-      `- **[${time}]** [${log.severity}] ${log.message || '(no message)'}`
-    );
-  });
-
-  let markdownOutput = `## ${type === 'build' ? "Build" : "Deployment"} Logs\n\n`;
-
-  Object.keys(formattedLogs).forEach((date) => {
-    markdownOutput += `### ${date}\n`;
-    markdownOutput += formattedLogs[date].join('\n') + '\n\n';
-  });
-
-  return markdownOutput.trim();
+export function getDeploymentStatusIcon(deploymentStatus: DeploymentStatus) {
+  return DEPLOYMENT_STATUS_ICON_PROPS[deploymentStatus];
 }
 
 export function calculateTotalCostByProjectId(usage: RawUsage) {

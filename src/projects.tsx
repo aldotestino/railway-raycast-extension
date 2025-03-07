@@ -1,6 +1,5 @@
 import { List } from "@raycast/api";
 import { useCachedPromise, useCachedState } from "@raycast/utils";
-import { useCallback } from "react";
 import ProjectDetails from "./components/project-details";
 import { getProjects } from "./lib/api/projects";
 import ProjectActions from "./components/project-actions";
@@ -13,7 +12,6 @@ export default function Command() {
   });
 
   const [showDetails, setShowDetails] = useCachedState("show-details", false);
-  const toggleDetails = useCallback(() => setShowDetails((prev) => !prev), []);
 
   return (
     <List isLoading={isLoading} isShowingDetail={showDetails}>
@@ -23,7 +21,7 @@ export default function Command() {
           key={project.id}
           title={project.name}
           subtitle={!showDetails ? project.description : undefined}
-          actions={<ProjectActions projectId={project.id} toggleDetails={toggleDetails} />}
+          actions={<ProjectActions projectId={project.id} toggleDetails={() => setShowDetails((prev) => !prev)} />}
           detail={<ProjectDetails project={project} />}
         />
       ))}

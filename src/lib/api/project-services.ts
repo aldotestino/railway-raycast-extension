@@ -1,4 +1,4 @@
-import { ProjectServices } from "../types";
+import { ProjectDetails } from "../types";
 import { gqlFetch } from "../utils";
 
 const query = (projectId: string) => `
@@ -59,19 +59,17 @@ type ProjectServicesResponse = {
   };
 };
 
-export async function getProjectServices(projectId: string): Promise<ProjectServices> {
+export async function getProjectServices(projectId: string): Promise<ProjectDetails> {
   const { project } = await gqlFetch<ProjectServicesResponse>(query(projectId));
 
   return {
-    environments: project.environments.edges.map(({ node }) => ({
-      id: node.id,
-      name: node.name,
-      services: node.serviceInstances.edges.map(({ node }) => ({
-        id: node.serviceId,
-        name: node.serviceName,
-        repo: node.source.repo,
-        domain: node.latestDeployment?.staticUrl ? `https://${node.latestDeployment.staticUrl}` : undefined,
-      })),
-    })),
-  };
+    services: project.environments.edges.flatMap(e => e.node.serviceInstances.edges.map(s => ({
+      environment: e.node.name,
+      id: s.node.serviceId,
+      name: s.node.serviceName,
+      repo: s.node.source?.repo,
+      domain: s.node.latestDeployment?.staticUrl ? `https://${s.node.latestDeployment.staticUrl}` : undefined
+    }))),
+    environments: project.environments.edges.map(e => e.node.name)
+  }
 }

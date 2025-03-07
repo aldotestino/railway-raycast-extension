@@ -1,5 +1,5 @@
 import { Action, ActionPanel, Icon } from "@raycast/api";
-import ProjectServices from "../screens/list-project-services";
+import ProjectServices from "../screens/project-services-list";
 import { projectPage } from "../lib/utils";
 
 function ProjectActions({ projectId, toggleDetails }: { projectId: string; toggleDetails: () => void }) {

@@ -27,14 +27,14 @@ query {
 			}
 		}
 	}
-  usage(groupBy: PROJECT_ID, measurements: [CPU_USAGE, MEMORY_USAGE_GB, DISK_USAGE_GB, NETWORK_RX_GB, NETWORK_TX_GB, EPHEMERAL_DISK_USAGE_GB]) {
+  usage(groupBy: PROJECT_ID, measurements: [CPU_USAGE, MEMORY_USAGE_GB, DISK_USAGE_GB, NETWORK_RX_GB, NETWORK_TX_GB]) {
 		measurement
 		value
 		tags {
 			projectId
 		}
 	}
-  estimatedUsage(measurements: [CPU_USAGE, MEMORY_USAGE_GB, DISK_USAGE_GB, NETWORK_RX_GB, NETWORK_TX_GB, EPHEMERAL_DISK_USAGE_GB]) {
+  estimatedUsage(measurements: [CPU_USAGE, MEMORY_USAGE_GB, DISK_USAGE_GB, NETWORK_RX_GB, NETWORK_TX_GB]) {
 		estimatedValue
 		measurement
 		projectId
@@ -92,7 +92,7 @@ export async function getProjects(): Promise<Array<Project>> {
     id: node.id,
     description: node.description,
     members: node.members as Array<Member>,
-    environments: node.environments.edges.map(({ node }) => node),
+    environments: node.environments.edges.map(({ node }) => node.name),
     admin: node.members.find(({ role }) => role === "ADMIN")! as Member,
     cost: costByProjectId[node.id] || 0,
     estimatedCost: estimatedCostByProjectId[node.id] || 0,
