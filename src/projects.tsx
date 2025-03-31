@@ -5,7 +5,6 @@ import { getProjects } from "./lib/api/projects";
 import ProjectActions from "./components/project-actions";
 
 export default function Command() {
-
   const { data, isLoading } = useCachedPromise(getProjects, [], {
     keepPreviousData: false,
     initialData: [],

@@ -7,14 +7,9 @@ function LogDetails({ log }: { log: Log }) {
     <List.Item.Detail
       metadata={
         <List.Item.Detail.Metadata>
-          <List.Item.Detail.Metadata.Label
-            title="Timestamp"
-            text={new Date(log.timestamp).toLocaleString()}
-          />
+          <List.Item.Detail.Metadata.Label title="Timestamp" text={new Date(log.timestamp).toLocaleString()} />
           <List.Item.Detail.Metadata.TagList title="Severity">
-            <List.Item.Detail.Metadata.TagList.Item
-              {...getSeverityTag(log.severity)}
-            />
+            <List.Item.Detail.Metadata.TagList.Item {...getSeverityTag(log.severity)} />
           </List.Item.Detail.Metadata.TagList>
         </List.Item.Detail.Metadata>
       }
@@ -23,4 +18,4 @@ function LogDetails({ log }: { log: Log }) {
   );
 }
 
-export default LogDetails
+export default LogDetails;

@@ -34,8 +34,8 @@ export type Project = {
   members: Array<Member>;
   environments: Array<string>;
   admin: Member;
-  cost: number;
-  estimatedCost: number;
+  //cost: number;
+  //estimatedCost: number;
 };
 
 export type Service = {
@@ -49,9 +49,22 @@ export type Service = {
 export type ProjectDetails = {
   services: Array<Service>;
   environments: Array<string>;
-}
+};
 
-export type DeploymentStatus = 'BUILDING' | 'CRASHED' | 'DEPLOYING' | 'FAILED' | 'INITIALIZING' | 'NEEDS_APPROVAL' | 'QUEUED' | 'REMOVED' | 'REMOVING' | 'SKIPPED' | 'SLEEPING' | 'SUCCESS' | 'WAITING';
+export type DeploymentStatus =
+  | "BUILDING"
+  | "CRASHED"
+  | "DEPLOYING"
+  | "FAILED"
+  | "INITIALIZING"
+  | "NEEDS_APPROVAL"
+  | "QUEUED"
+  | "REMOVED"
+  | "REMOVING"
+  | "SKIPPED"
+  | "SLEEPING"
+  | "SUCCESS"
+  | "WAITING";
 
 export type ServiceDeployment = {
   id: string;
@@ -68,13 +81,13 @@ export type Log = {
 export type ServiceLogs = {
   type: "deploy" | "build";
   logs: Array<Log>;
-}
+};
 
 export type RawUsage = Array<{
-  measurement: string
-  value?: number
-  estimatedValue?: number
-  projectId: string
-}>
+  measurement: string;
+  value?: number;
+  estimatedValue?: number;
+  projectId: string;
+}>;
 
-export type Measuements = 'cpu' | 'memory' | 'network' | 'disk';
+export type Measuements = "cpu" | "memory" | "network" | "disk";

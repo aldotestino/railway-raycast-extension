@@ -63,13 +63,15 @@ export async function getProjectServices(projectId: string): Promise<ProjectDeta
   const { project } = await gqlFetch<ProjectServicesResponse>(query(projectId));
 
   return {
-    services: project.environments.edges.flatMap(e => e.node.serviceInstances.edges.map(s => ({
-      environment: e.node.name,
-      id: s.node.serviceId,
-      name: s.node.serviceName,
-      repo: s.node.source?.repo,
-      domain: s.node.latestDeployment?.staticUrl ? `https://${s.node.latestDeployment.staticUrl}` : undefined
-    }))),
-    environments: project.environments.edges.map(e => e.node.name)
-  }
+    services: project.environments.edges.flatMap((e) =>
+      e.node.serviceInstances.edges.map((s) => ({
+        environment: e.node.name,
+        id: s.node.serviceId,
+        name: s.node.serviceName,
+        repo: s.node.source?.repo,
+        domain: s.node.latestDeployment?.staticUrl ? `https://${s.node.latestDeployment.staticUrl}` : undefined,
+      })),
+    ),
+    environments: project.environments.edges.map((e) => e.node.name),
+  };
 }

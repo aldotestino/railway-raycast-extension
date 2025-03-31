@@ -15,13 +15,13 @@ export const SEVERITY_REGEX = {
   info: /\b(info)\b/i,
   warning: /\b(warn(ing)?)\b/i,
   error: /\b(err(or)?)\b/i,
-}
+};
 
-export const ENV_TAG_PROPS: Record<string, { color: Color, icon: Icon }> = {
+export const ENV_TAG_PROPS: Record<string, { color: Color; icon: Icon }> = {
   dev: { color: Color.Yellow, icon: Icon.WrenchScrewdriver },
   prod: { color: Color.Green, icon: Icon.Rocket },
   test: { color: Color.Blue, icon: Icon.Syringe },
-}
+};
 
 export const DEPLOYMENT_STATUS_ICON_PROPS: Record<DeploymentStatus, React.ComponentProps<typeof List.Item>["icon"]> = {
   BUILDING: { source: Icon.WrenchScrewdriver, tintColor: Color.Orange },
@@ -37,17 +37,17 @@ export const DEPLOYMENT_STATUS_ICON_PROPS: Record<DeploymentStatus, React.Compon
   SLEEPING: { source: Icon.Moon, tintColor: Color.Blue },
   SUCCESS: { source: Icon.CheckCircle, tintColor: Color.Green },
   WAITING: { source: Icon.Clock, tintColor: Color.SecondaryText },
-}
+};
 
-export const LOG_SEVERITY_TAG_PROPS: Record<string, { color: Color, text: string, icon: Icon }> = {
+export const LOG_SEVERITY_TAG_PROPS: Record<string, { color: Color; text: string; icon: Icon }> = {
   info: { color: Color.Blue, text: "INFO", icon: Icon.Info },
   warning: { color: Color.Yellow, text: "WARNING", icon: Icon.Warning },
   error: { color: Color.Red, text: "ERROR", icon: Icon.Xmark },
-}
+};
 
 export const PRICES: Record<Measuements, number> = {
   cpu: 0.000463,
   memory: 0.000231,
-  network: 0.10,
-  disk: 0.000005787037037
-}
+  network: 0.1,
+  disk: 0.000005787037037,
+};

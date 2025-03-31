@@ -2,12 +2,26 @@ import { Action, ActionPanel } from "@raycast/api";
 import { deploymentPage } from "../lib/utils";
 import DetailLogs from "../screens/logs-list";
 
-function DeploymentActions({ projectId, serviceId, deploymentId }: { projectId: string; serviceId: string; deploymentId: string }) {
+function DeploymentActions({
+  projectId,
+  serviceId,
+  deploymentId,
+}: {
+  projectId: string;
+  serviceId: string;
+  deploymentId: string;
+}) {
   return (
     <ActionPanel>
       <ActionPanel.Section title="Open in Raycast">
-        <Action.Push title="Show Deployment Logs" target={<DetailLogs projectId={projectId} serviceId={serviceId} deploymentId={deploymentId} type="deploy" />} />
-        <Action.Push title="Show Build Logs" target={<DetailLogs projectId={projectId} serviceId={serviceId} deploymentId={deploymentId} type="build" />} />
+        <Action.Push
+          title="Show Deployment Logs"
+          target={<DetailLogs projectId={projectId} serviceId={serviceId} deploymentId={deploymentId} type="deploy" />}
+        />
+        {/* <Action.Push
+          title="Show Build Logs"
+          target={<DetailLogs projectId={projectId} serviceId={serviceId} deploymentId={deploymentId} type="build" />}
+        /> */}
       </ActionPanel.Section>
 
       <ActionPanel.Section title="Open in Browser">

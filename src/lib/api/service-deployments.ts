@@ -22,13 +22,13 @@ type ServiceDeploymentsResponse = {
     deployments: {
       edges: Array<{
         node: {
-          id: string
-          status: string
-          createdAt: string
-        }
-      }>
-    }
-  }
+          id: string;
+          status: string;
+          createdAt: string;
+        };
+      }>;
+    };
+  };
 };
 
 export async function getServiceDeployments(serviceId: string): Promise<Array<ServiceDeployment>> {

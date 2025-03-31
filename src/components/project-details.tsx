@@ -9,11 +9,13 @@ function ProjectDetails({ project }: { project: Project }) {
         <List.Item.Detail.Metadata>
           <List.Item.Detail.Metadata.Label title="Details" />
           {project.description && <List.Item.Detail.Metadata.Label title="Description" text={project.description} />}
-          {project.admin && <List.Item.Detail.Metadata.Label
-            title="Admin"
-            text={project.admin.name || project.admin.email.split("@")[0]}
-            icon={{ mask: Image.Mask.Circle, source: project.admin.avatar || `z=${project.admin.email}` }}
-          />}
+          {project.admin && (
+            <List.Item.Detail.Metadata.Label
+              title="Admin"
+              text={project.admin.name || project.admin.email.split("@")[0]}
+              icon={{ mask: Image.Mask.Circle, source: project.admin.avatar || `z=${project.admin.email}` }}
+            />
+          )}
           <List.Item.Detail.Metadata.Label
             title="Members"
             icon={project.members.length > 1 ? Icon.TwoPeople : Icon.Person}
@@ -21,11 +23,7 @@ function ProjectDetails({ project }: { project: Project }) {
           />
           <List.Item.Detail.Metadata.TagList title="Environments">
             {project.environments.map((env) => (
-              <List.Item.Detail.Metadata.TagList.Item
-                key={env}
-                text={env}
-                {...getEnvironmentTag(env)}
-              />
+              <List.Item.Detail.Metadata.TagList.Item key={env} text={env} {...getEnvironmentTag(env)} />
             ))}
           </List.Item.Detail.Metadata.TagList>
           <List.Item.Detail.Metadata.Separator />
@@ -38,4 +36,4 @@ function ProjectDetails({ project }: { project: Project }) {
   );
 }
 
-export default ProjectDetails
+export default ProjectDetails;
