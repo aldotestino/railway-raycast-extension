@@ -17,6 +17,18 @@
       "mode": "view"
     }
   ],
+  "tools": [
+    {
+      "name": "projects",
+      "title": "Projects",
+      "description": "Show a list of your Railway projects"
+    },
+    {
+      "name": "services",
+      "title": "Services",
+      "description": "Show a list of your Railway services for a project"
+    }
+  ],
   "preferences": [
     {
       "name": "railwayApiKey",
